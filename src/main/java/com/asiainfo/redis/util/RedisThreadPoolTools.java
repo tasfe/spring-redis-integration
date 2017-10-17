@@ -1,10 +1,13 @@
 package com.asiainfo.redis.util;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.asiainfo.util.CustomThreadFactory;
+import com.asiainfo.util.ThreadPoolUtils;
 
 /**
  * @Description: TODO
@@ -18,13 +21,14 @@ public class RedisThreadPoolTools {
 	private static final Logger logger = LoggerFactory.getLogger(RedisThreadPoolTools.class);
 	
 	private final ExecutorService service;
+	private final ThreadFactory factory = new CustomThreadFactory("redis-cluster");
 	
 	private RedisThreadPoolTools() {
-		this.service = Executors.newFixedThreadPool(10);
+		this.service = ThreadPoolUtils.getInstance().fixedThreadPool(10, factory);
 	}
 	
 	private RedisThreadPoolTools(int size) {
-		this.service = Executors.newFixedThreadPool(size);
+		this.service = ThreadPoolUtils.getInstance().fixedThreadPool(size, factory);
 	}
 	
 	static class RedisThreadPoolHolder {

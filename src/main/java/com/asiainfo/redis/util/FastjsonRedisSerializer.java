@@ -14,6 +14,7 @@ public class FastjsonRedisSerializer implements RedisSerializer<Object> {
 
     private static SerializerFeature[] features = {SerializerFeature.WriteClassName};
     
+    @Override
     public Object deserialize(byte[] bytes) throws SerializationException {
     	
         if (bytes == null || bytes.length == 0) {
@@ -28,6 +29,7 @@ public class FastjsonRedisSerializer implements RedisSerializer<Object> {
         }
     }
 
+    @Override
     public byte[] serialize(Object t) throws SerializationException {
     	
         if (t == null) {
